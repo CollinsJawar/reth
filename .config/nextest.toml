@@ -1,7 +1,22 @@
 [profile.default]
-retries = { backoff = "exponential", count = 2, delay = "2s", jitter = true }
-slow-timeout = { period = "30s", terminate-after = 4 }
+# Retry settings for operations
+retries = { 
+    backoff = "exponential",   # Backoff strategy: exponential
+    count = 2,                 # Number of retry attempts
+    delay = "2s",              # Delay between retries
+    jitter = true              # Add randomness to delay
+}
 
+# Timeout settings for slow operations
+slow-timeout = { 
+    period = "30s",            # Period before considering an operation as slow
+    terminate-after = 4        # Maximum number of slow periods before termination
+}
+
+# Specific overrides for particular tests
 [[profile.default.overrides]]
-filter = "test(general_state_tests)"
-slow-timeout = { period = "1m", terminate-after = 10 }
+filter = "test(general_state_tests)" # Applies only to tests matching this filter
+slow-timeout = { 
+    period = "1m",             # Override period for slow timeout
+    terminate-after = 10       # Override maximum number of slow periods
+}
